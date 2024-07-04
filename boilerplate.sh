@@ -17,6 +17,17 @@ readonly SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 die() { echo "$*" 1>&2 ; exit 1; }
 
+# safeExit Function
+# -----------------------------------
+# Any actions that should be taken if the script ends correctly
+# -----------------------------------
+function safeExit() {
+
+  if [ -d "${tmpDir}" ]; then
+    rm -r "${tmpDir}"
+  fi
+  exit
+}
 
 
 # trapCleanup Function
@@ -90,13 +101,13 @@ Short description
 # Read the parameters
 while [[ $1 = -?* ]]; do
   case $1 in
-    -h|--help) usage >&2; exit ;;
-    --version) echo ${version}; exit ;;
+    -h|--help) usage >&2; safeExit ;;
+    --version) echo ${version}; safeExit ;;
     -v|--verbose) verbose=1 && shift;;
     -q|--quiet) quiet=1 && shift;;
     -d|--debug) debug=1 && shift;;
     --force) force=1 && shift;;
-    *) usage >&2; exit ;;
+    *) usage >&2; safeExit ;;
   esac
 done
 
@@ -135,3 +146,5 @@ set -o pipefail
 
 # Run your script
 mainScript
+
+safeExit
