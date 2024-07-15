@@ -3,11 +3,11 @@
 version="1.0.0"
 
 
-scriptTemplateVersion="1.0.0"
+scriptTemplateVersion="1.0.1"
 
 # HISTORY:
 #
-# * DATE - v1.0.0  - 2024/07/24
+# * DATE - v1.0.1  - 2024/15/24
 #
 # ##################################################
 
@@ -48,8 +48,6 @@ function trapCleanup() {
 # -----------------------------------
 quiet=0
 verbose=0
-force=0
-strict=0
 debug=0
 
 
@@ -67,6 +65,8 @@ tmpDir="$SCRIPT_DIR/tmp-$RANDOM/"
 function mainScript() {
 ############## Begin Script Here ###################
 ####################################################
+
+
 
 echo -n
 
@@ -86,7 +86,6 @@ Short description
  Options:
   --force           Skip all user interaction.  Implied 'Yes' to all actions.
   -q, --quiet       Quiet (no output)
-  -l, --log         Print log to file
   -v, --verbose     Output more information. (Items echoed to 'verbose')
   -d, --debug       Runs script in BASH debug mode (set -x)
   -h, --help        Display this help and exit
@@ -102,11 +101,10 @@ Short description
 while [[ $1 = -?* ]]; do
   case $1 in
     -h|--help) usage >&2; safeExit ;;
-    --version) echo ${version}; safeExit ;;
-    -v|--verbose) verbose=1 && shift;;
-    -q|--quiet) quiet=1 && shift;;
+    -v|--version) echo ${version}; safeExit ;;
+    --verbose) echo ${verbose}; safeExit ;;
     -d|--debug) debug=1 && shift;;
-    --force) force=1 && shift;;
+    -q|--quiet) echo ${quiet}; safeExit ;;
     *) usage >&2; safeExit ;;
   esac
 done
@@ -136,12 +134,9 @@ if [ "${debug}" == "1" ]; then
 fi
 
 # Exit on empty variable
-if [ "${strict}" == "1" ]; then
-  set -o nounset
-fi
+set -o nounset
 
 # Bash will remember & return the highest exitcode in a chain of pipes.
-# This way you can catch the error in case mysqldump fails in `mysqldump |gzip`, for example.
 set -o pipefail
 
 # Run your script
