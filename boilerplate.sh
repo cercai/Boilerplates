@@ -3,11 +3,11 @@
 version="1.0.0"
 
 
-scriptTemplateVersion="1.0.1"
+scriptTemplateVersion="1.0.2"
 
 # HISTORY:
 #
-# * DATE - v1.0.1  - 2024/15/24
+# * DATE - v1.0.2  - 2024/15/24
 #
 # ##################################################
 
@@ -84,7 +84,7 @@ usage() {
 Short description
 
  Options:
-  --force           Skip all user interaction.  Implied 'Yes' to all actions.
+
   -q, --quiet       Quiet (no output)
   -v, --verbose     Output more information. (Items echoed to 'verbose')
   -d, --debug       Runs script in BASH debug mode (set -x)
@@ -101,10 +101,10 @@ Short description
 while [[ $1 = -?* ]]; do
   case $1 in
     -h|--help) usage >&2; safeExit ;;
-    -v|--version) echo ${version}; safeExit ;;
-    --verbose) echo ${verbose}; safeExit ;;
     -d|--debug) debug=1 && shift;;
+    -v|--verbose) echo ${verbose}; safeExit ;;
     -q|--quiet) echo ${quiet}; safeExit ;;
+    --version) echo ${version}; safeExit ;;
     *) usage >&2; safeExit ;;
   esac
 done
