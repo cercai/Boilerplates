@@ -3,11 +3,11 @@
 version="1.0.0"
 
 
-scriptTemplateVersion="1.0.2"
+scriptTemplateVersion="1.0.3"
 
 # HISTORY:
 #
-# * DATE - v1.0.2  - 2024/15/24
+# * DATE - v1.0.3  - 2024/20/24
 #
 # ##################################################
 
@@ -62,24 +62,11 @@ tmpDir="$SCRIPT_DIR/tmp-$RANDOM/"
 }
 
 
-function mainScript() {
-############## Begin Script Here ###################
-####################################################
-
-
-
-echo -n
-
-####################################################
-############### End Script Here ####################
-}
-
-
 ############## Begin Options and Usage ###################
 
 # Print usage
 usage() {
-  echo -n "${0} COMMAND [OPTION]...
+  echo -n "${0} [OPTION]...
 
 Short description
 
@@ -109,21 +96,11 @@ while [[ $1 = -?* ]]; do
   esac
 done
 
-
 ############## End Options and Usage ###################
 
 
-
-
-# ############# ############# #############
-# ##                                     ##
-# ##    NO NEED TO CHANGE ANYTHING       ##
-# ##         BENEATH THIS LINE           ##
-# ##                                     ##
-# ############# ############# #############
-
 # Trap bad exits with your cleanup function
-trap trapCleanup EXIT INT TERM
+trap trapCleanup INT TERM
 
 # Exit on error. Append '||true' when you run the script if you expect an error.
 set -o errexit
@@ -139,7 +116,11 @@ set -o nounset
 # Bash will remember & return the highest exitcode in a chain of pipes.
 set -o pipefail
 
-# Run your script
-mainScript
+# ############# ############# #############
+# ##                                     ##
+# ##       WRITE YOUR SCRIPT HERE        ##
+# ##                                     ##
+# ############# ############# #############
+
 
 safeExit
